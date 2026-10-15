@@ -13,6 +13,19 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin dodgeBox
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.1
+/build:dodgeBox
+
 #begin JJKFont.ttf
 /copy:JJKFont.ttf
 
@@ -56,4 +69,17 @@
 /processorParam:Quality=Best
 /processorParam:Version=3.8.5.1
 /build:titleTheme.mp3
+
+#begin X:/My Drive/Grade 12 Game Assets/Final Game Assets/soulSprite.psd
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.1
+/build:X:/My Drive/Grade 12 Game Assets/Final Game Assets/soulSprite.psd;soulSprite.psd
 

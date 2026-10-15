@@ -14,12 +14,12 @@ namespace MacUndertale___JJK
         SpriteFont titleFont;
         Song titleSong;
         Rectangle window;
-        float titleO, titleTime, screenTime;
-        Vector2 openingText;
-        
+        float titleO, titleTime;
+        Vector2 openingText, controlsText, skipOption, startOption;
+        GamePadState gamePadCurrent, gamePadOld;
         enum Screen
         {
-            Title, Opening, Main, Win, Lose
+            Title, Opening, Menu, Battle, Win, Lose
         }
         Screen screen = Screen.Title;
         public Game1()
@@ -37,7 +37,10 @@ namespace MacUndertale___JJK
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
 
-            openingText = new Vector2(275, 375);
+            openingText = new Vector2(50, 950);
+            controlsText = new Vector2(50, 200);
+            skipOption = new Vector2(950, 800);
+            startOption = new Vector2(400, 800);
 
             base.Initialize();
         }
@@ -58,9 +61,10 @@ namespace MacUndertale___JJK
                 Exit();
 
             // TODO: Add your update logic here
+            gamePadOld = gamePadCurrent;
+            gamePadCurrent = GamePad.GetState(PlayerIndex.One);
             if (screen == Screen.Title)
             {
-                screenTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 titleTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 
                 titleO = 0f;
@@ -80,8 +84,18 @@ namespace MacUndertale___JJK
                 {
                     MediaPlayer.Play(titleSong);
                 }
-                if (screenTime >= 5)
+                if (gamePadCurrent.Buttons.BigButton == ButtonState.Pressed && gamePadOld.Buttons.BigButton == ButtonState.Released)
+                {
                     screen = Screen.Opening;
+                    titleTime = 0f;
+                }
+            }
+            if (screen == Screen.Opening)
+            {
+                titleTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                openingText.Y -= 2;
+                if (gamePadCurrent.Buttons.B == ButtonState.Pressed && gamePadOld.Buttons.B == ButtonState.Released)
+                    titleTime = 22.1f;
             }
             base.Update(gameTime);
         }
@@ -94,13 +108,39 @@ namespace MacUndertale___JJK
             _spriteBatch.Begin();
 
             if (screen == Screen.Title)
+            {
                 _spriteBatch.Draw(titleImg, window, Color.White * titleO);
+                _spriteBatch.DrawString(titleFont, "Press START to start", startOption, Color.White);
+            }
             if (screen == Screen.Opening)
             {
-                _spriteBatch.DrawString(titleFont, "Welcome to Shibuya!", openingText, Color.White);
+                DrawOpeningText();
             }
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+        void DrawOpeningText()
+        {
+            if (titleTime <= 22f)
+            {
+                _spriteBatch.DrawString(titleFont, "Press A to skip", skipOption, Color.White * 0.2f);
+                _spriteBatch.DrawString(titleFont, "Welcome to the Culling Games!", openingText, Color.White);
+                _spriteBatch.DrawString(titleFont, "Curses are going around like crazy!", new Vector2(openingText.X, openingText.Y + 300), Color.White);
+                _spriteBatch.DrawString(titleFont, "It's your j ob to stop them.", new Vector2(openingText.X, openingText.Y + 500), Color.White);
+                _spriteBatch.DrawString(titleFont, "You will get skills and items as you fight.", new Vector2(openingText.X, openingText.Y + 700), Color.White);
+                _spriteBatch.DrawString(titleFont, "Avoid attacks as best you can.", new Vector2(openingText.X, openingText.Y + 900), Color.White);
+                _spriteBatch.DrawString(titleFont, "Enemies will get progressively harder!", new Vector2(openingText.X, openingText.Y + 1100), Color.White);
+                _spriteBatch.DrawString(titleFont, "I'll give you an easy enemy to start.", new Vector2(openingText.X, openingText.Y + 1300), Color.White);
+                _spriteBatch.DrawString(titleFont, "Good Luck!", new Vector2(openingText.X, openingText.Y + 1500), Color.White);
+            }
+            else
+            {
+                _spriteBatch.DrawString(titleFont, "Controls:", new Vector2(controlsText.X, controlsText.Y - 90), Color.White);
+                _spriteBatch.DrawString(titleFont, "Movement = Joystick", controlsText, Color.White);
+                _spriteBatch.DrawString(titleFont, "Select = A", new Vector2(controlsText.X, controlsText.Y + 90), Color.White);
+                _spriteBatch.DrawString(titleFont, "Back = B", new Vector2(controlsText.X, controlsText.Y + 180), Color.White);
+                _spriteBatch.DrawString(titleFont, "Exit = Z", new Vector2(controlsText.X, controlsText.Y + 270), Color.White);
+            }
         }
     }
 }
