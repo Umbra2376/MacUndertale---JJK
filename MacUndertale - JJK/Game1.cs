@@ -19,9 +19,14 @@ namespace MacUndertale___JJK
         GamePadState gamePadCurrent, gamePadOld;
         enum Screen
         {
-            Title, Opening, Menu, Battle, Win, Lose
+            Title, Opening, Menu, Battle, Select, Win, Lose
         }
         Screen screen = Screen.Title;
+        enum Battle
+        {
+            b1, b2, b3, b4, b5, b6, b7, b8, b9, b10
+        }
+        Battle battle;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -139,7 +144,7 @@ namespace MacUndertale___JJK
                 _spriteBatch.DrawString(titleFont, "Movement = Joystick", controlsText, Color.White);
                 _spriteBatch.DrawString(titleFont, "Select = A", new Vector2(controlsText.X, controlsText.Y + 90), Color.White);
                 _spriteBatch.DrawString(titleFont, "Back = B", new Vector2(controlsText.X, controlsText.Y + 180), Color.White);
-                _spriteBatch.DrawString(titleFont, "Exit = Z", new Vector2(controlsText.X, controlsText.Y + 270), Color.White);
+                _spriteBatch.DrawString(titleFont, "Exit = Z (on the back)", new Vector2(controlsText.X, controlsText.Y + 270), Color.White);
             }
         }
     }
